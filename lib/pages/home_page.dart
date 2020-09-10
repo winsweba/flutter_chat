@@ -14,7 +14,11 @@ import 'package:google_sign_in/google_sign_in.dart';
 final GoogleSignIn gSignIn = GoogleSignIn();
 final usersReference = Firestore.instance.collection("users");
 final StorageReference storageRefrence = FirebaseStorage.instance.ref().child("Post Pictures");
-final postReference = Firestore.instance.collection("posts");
+final postsReference = Firestore.instance.collection("posts");
+final activityFeedReference = Firestore.instance.collection("feed");
+final commentsReference = Firestore.instance.collection("comments");
+final followersReference = Firestore.instance.collection("followers");
+final followingReference = Firestore.instance.collection("following");
 
 final DateTime timestamp = DateTime.now();
 
@@ -111,14 +115,11 @@ class _HomeState extends State<Home> {
     return Scaffold(
       body: PageView(
         children: <Widget>[
-          // TimeLinePage(),
-          RaisedButton.icon(onPressed: logoutUser, 
-    icon: Icon(Icons.close), 
-    label: Text('Sign Out')),
+           TimeLinePage(),
           SearchPage(),
           UploadPage(gCurrentUser: currentUser,),
           NotificationsPage(),
-          ProfilePage(),
+          ProfilePage(userProfileId: currentUser?.id,)
         ],
         controller: pageController,
         onPageChanged: whenPageChanges,

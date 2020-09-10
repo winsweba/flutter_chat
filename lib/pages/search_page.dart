@@ -2,7 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat/models/user.dart';
-import 'package:flutter_chat/pages/home.dart';
+import 'package:flutter_chat/pages/home_page.dart';
+import 'package:flutter_chat/pages/profile_page.dart';
 import 'package:flutter_chat/widget/progress_widget.dart';
 class SearchPage extends StatefulWidget {
   @override
@@ -53,7 +54,7 @@ class _SearchPageState extends State<SearchPage> with AutomaticKeepAliveClientMi
   }
 
 
-  Container displayNoSearchResultScreen(){
+  Container displayNoSearchResultScreen(BuildContext context){
     final Orientation orientation = MediaQuery.of(context).orientation;
     
     return Container(
@@ -97,7 +98,7 @@ class _SearchPageState extends State<SearchPage> with AutomaticKeepAliveClientMi
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: searchPageHeader(),
-      body: futureSearchResults == null ? displayNoSearchResultScreen() : displayUsersFoundScreen(),
+      body: futureSearchResults == null ? displayNoSearchResultScreen(context) : displayUsersFoundScreen(),
     );
   }
 }
@@ -117,7 +118,7 @@ class UserResult extends StatelessWidget {
          child: Column(
            children: <Widget>[
              GestureDetector(
-               onTap: () => print("Tapped"),
+               onTap: () => disPlayUserProfile(context, userProfileId: eachUser.id),
                child: ListTile(
                  leading: CircleAvatar(backgroundColor: Colors.black, backgroundImage: CachedNetworkImageProvider(eachUser.url),),
                  title: Text(eachUser.profileName,
@@ -139,5 +140,9 @@ class UserResult extends StatelessWidget {
          ),
       ),
     );
+  }
+
+  disPlayUserProfile(BuildContext context, {String userProfileId}){
+    Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(userProfileId: userProfileId) ));
   }
 }

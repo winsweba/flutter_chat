@@ -5,7 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat/models/user.dart';
-import 'package:flutter_chat/pages/home.dart';
+import 'package:flutter_chat/pages/home_page.dart';
 import 'package:flutter_chat/widget/progress_widget.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
@@ -118,7 +118,7 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
     final tDirectory = await getTemporaryDirectory();
     final path = tDirectory.path;
     InD.Image mImageFile = InD.decodeImage(file.readAsBytesSync());
-    final compressedImageFile = File('$path/img_$postId.jpg')..writeAsBytesSync(InD.encodeJpg(mImageFile, quality: 90));
+    final compressedImageFile = File('$path/img_$postId.jpg')..writeAsBytesSync(InD.encodeJpg(mImageFile, quality: 60));
     setState(() {
       file = compressedImageFile;
     });
@@ -146,7 +146,7 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
   }
 
   savePostInfoToFireStore({String url, String location, String description}){
-    postReference.document(widget.gCurrentUser.id).collection("usersPosts").document(postId).setData({
+    postsReference.document(widget.gCurrentUser.id).collection("usersPosts").document(postId).setData({
       "postId": postId,
       "ownerId": widget.gCurrentUser.id,
       "timestamp": timestamp,

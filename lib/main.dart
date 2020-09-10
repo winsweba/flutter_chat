@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_chat/pages/home.dart';
+import 'package:flutter_chat/pages/home_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

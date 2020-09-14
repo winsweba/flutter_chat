@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chat/models/user.dart';
 import 'package:flutter_chat/pages/comments_page.dart';
 import 'package:flutter_chat/pages/home_page.dart';
+import 'package:flutter_chat/pages/profile_page.dart';
 import 'package:flutter_chat/widget/progress_widget.dart';
 
 class Post extends StatefulWidget {
@@ -127,7 +128,7 @@ class _PostState extends State<Post> {
         return ListTile(
           leading: CircleAvatar(backgroundImage: CachedNetworkImageProvider(user.url), backgroundColor: Colors.grey),
           title: GestureDetector(
-            onTap: () => print("Show profile"),
+            onTap: () => disPlayUserProfile(context, userProfileId: user.id),
             child: Text(
               user.username,
               style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
@@ -143,6 +144,9 @@ class _PostState extends State<Post> {
     );
   }
 
+  disPlayUserProfile(BuildContext context, {String userProfileId}){
+    Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(userProfileId: userProfileId) ));
+  }
 
   removerLike(){
     bool isNotPostOwner = currentOnlineUserId != ownerId;
@@ -164,7 +168,7 @@ class _PostState extends State<Post> {
         "type": "like",
         "username": currentUser.username,
         "userId": currentUser.id,
-        "timestamp": timestamp,
+        "timestamp": DateTime.now(),
         "url": url,
         "postId": postId,
         "userProfileImg": currentUser.url,

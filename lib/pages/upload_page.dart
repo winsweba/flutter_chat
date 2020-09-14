@@ -28,6 +28,7 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
   String postId = Uuid().v4();
   TextEditingController descriptionTextEditingController = TextEditingController();
   TextEditingController locationTextEditingController = TextEditingController();
+  
   captureImageCamera() async{
 
     Navigator.pop(context);
@@ -149,7 +150,7 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
     postsReference.document(widget.gCurrentUser.id).collection("usersPosts").document(postId).setData({
       "postId": postId,
       "ownerId": widget.gCurrentUser.id,
-      "timestamp": timestamp,
+      "timestamp": DateTime.now(),
       "likes": {},
       "username": widget.gCurrentUser.username,
       "description": description,

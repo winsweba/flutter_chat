@@ -22,7 +22,7 @@ class _SearchPageState extends State<SearchPage> with AutomaticKeepAliveClientMi
     searchTextEditingController.clear();
   }
 
-  controSearching(String str){
+  controlSearching(String str){
     Future<QuerySnapshot> allUsers = usersReference.where("profileName", isGreaterThanOrEqualTo: str ).getDocuments();
     setState(() {
       futureSearchResults = allUsers;
@@ -48,7 +48,7 @@ class _SearchPageState extends State<SearchPage> with AutomaticKeepAliveClientMi
           prefixIcon: Icon(Icons.person_pin, color: Colors.white, size: 30,),
           suffixIcon: IconButton(icon: Icon(Icons.clear, color: Colors.white,), onPressed: emptyTheTextFormField,)
         ),
-        onFieldSubmitted: controSearching,
+        onFieldSubmitted: controlSearching,
       ),
     );
   }
